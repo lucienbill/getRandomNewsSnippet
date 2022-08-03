@@ -1,0 +1,13 @@
+name = "getrandomnewssnippet"
+main = "src/index.ts"
+compatibility_date = "2022-07-28"
+
+[[kv_namespaces]]
+    binding= "NEWS"
+    id = 'foo'
+    preview_id= 'bar'
+
+[env.production]
+kv_namespaces = [
+    { binding = "NEWS", id = "baz" }
+]
