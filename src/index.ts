@@ -26,16 +26,28 @@ export default {
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<Response> {
-		const keys = await env.NEWS.list()
-		const randomIndex = Math.floor(keys.keys.length * Math.random())
-		const randomKey = keys.keys[randomIndex].name
-		const randomData = await env.NEWS.get(randomKey, { cacheTtl: 24*60*60 })
+		/* returns an element from the kv store :
+			- if a 'key' is sent in headers -> retrieves the value of the key
+			- else : retrieves the  value of a random key
+		*/
+		let key=request.headers.get("key")
+		if (key == null){
+			const keys = await env.NEWS.list()
+			const randomIndex = Math.floor(keys.keys.length * Math.random())
+			key = keys.keys[randomIndex].name
+		} 
+		let data = await env.NEWS.get(key, { cacheTtl: 24*60*60 })
+		if (data == null){
+			data = `<h2>Erreur</h2><p>Aucune donnée ne correspond à la clé demandée (${key})</p>`
+		}
+
 		return new Response(
-			JSON.stringify(randomData),
+			JSON.stringify(data),
 			{headers: {
-				'Access-Control-Allow-Origin': 'https://www.lucienbill.fr/'
+				'Access-Control-Allow-Origin': '*',
+				'key': key 
 			}}
-			);
+		);
 	},
 
 };
