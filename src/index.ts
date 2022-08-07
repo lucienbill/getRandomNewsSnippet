@@ -45,6 +45,7 @@ export default {
 			JSON.stringify(data),
 			{headers: {
 				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Expose-Headers':'key',
 				'key': key 
 			}}
 		);
