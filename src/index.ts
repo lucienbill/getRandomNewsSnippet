@@ -46,6 +46,7 @@ export default {
 			{headers: {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Expose-Headers':'key',
+				'Access-Control-Allow-Headers': 'key',
 				'key': key 
 			}}
 		);
