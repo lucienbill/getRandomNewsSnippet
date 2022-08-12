@@ -38,7 +38,18 @@ export default {
 		} 
 		let data = await env.NEWS.get(key, { cacheTtl: 24*60*60 })
 		if (data == null){
-			data = `<h2>Erreur</h2><p>Aucune donnée ne correspond à la clé demandée (${key})</p>`
+			return new Response(null,
+				{
+					status: 404,
+					statusText: `no data for key ${key}`,
+					headers: {
+						'Access-Control-Allow-Origin': '*',
+						'Access-Control-Expose-Headers':'key',
+						'Access-Control-Allow-Headers': 'key',
+						'key': key 
+					}
+				}
+			);
 		}
 
 		return new Response(
