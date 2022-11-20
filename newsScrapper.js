@@ -10,7 +10,12 @@ for (let t of titles){
   let el;
   // get title + link
   let linkTitle = t.children[0]
-    el = `<h2><a title='lien vers la ressource' href='${linkTitle.href.replace(/[&?]utm.*$/,'')}'>${linkTitle.text}</a></h2>`
+  yt_link = linkTitle.href.match(/&v\=.+($|&)/)
+  href = linkTitle.href.replace(/[&?]utm.*(&v=)?.+$/,'')
+  if (yt_link != null) {
+    href += "?" + yt_link[0]
+  }
+  el = `<h2><a title='lien vers la ressource' href='${href}'>${linkTitle.text}</a></h2>`
   let descriptionNode = t.parentNode.childNodes[3];
   
   // clean each element of the description
