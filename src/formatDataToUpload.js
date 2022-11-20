@@ -1,7 +1,7 @@
 const snippets = require ('./dataToUpload');
 
 let dataForKV = []
-let i = 0 // start = biggest ID + 1
+let i = 376 // start = biggest ID + 1
 for (let el of snippets.snippets){
 	const base64data = Buffer.from(el, 'utf8').toString('base64')
 	let data = {
@@ -21,3 +21,4 @@ fs.writeFile('dataForKv.json', JSON.stringify(dataForKV), function (err) {
 });
 
 // wrangler kv:bulk put dataForKv.json --preview --binding="NEWS"
+// wrangler kv:bulk put dataForKv.json --preview false --binding="NEWS"
